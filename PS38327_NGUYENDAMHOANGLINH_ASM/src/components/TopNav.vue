@@ -20,13 +20,40 @@
                     <i class="fa-solid fa-face-smile"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Đăng nhập/ Đăng ký</a></li>
-                    <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
-                    <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                    <li v-if="!token">
+                        <RouterLink class="dropdown-item" to="/login">Đăng nhập</RouterLink>
+                    </li>
+                    <li v-if="!token">
+                        <RouterLink class="dropdown-item" to="/register">Đăng ký</RouterLink>
+                    </li>
+                    <li v-if="token">
+                        <RouterLink class="dropdown-item" to="/me">Thông tin cá nhân</RouterLink>
+                    </li>
+                    <li v-if="token">
+                        <a class="dropdown-item" href="#" @click.prevent="logout">Đăng xuất</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 </template>
+
+<script setup>
+    import {ref, inject} from 'vue';
+    import {useRouter} from 'vue-router';
+
+    const router = useRouter();
+    const token = ref(localStorage.getItem('authToken') || '');
+    const bus = inject('bus');
+
+    bus.on('loginSuccess', (id) => {token.value = id});
+
+
+    function logout(){
+        token.value = '';
+        localStorage.removeItem('authToken');
+        router.push('/');
+    }
+</script>
 
 <style scoped></style>

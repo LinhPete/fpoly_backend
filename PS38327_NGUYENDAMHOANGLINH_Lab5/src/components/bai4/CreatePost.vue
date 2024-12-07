@@ -1,53 +1,56 @@
 <script setup>
-    import {ref} from 'vue';
+import { ref } from 'vue';
 
-    const emit = defineEmits(['add-post']);
+const emit = defineEmits(['add-post']);
 
-    const title = ref('');
-    const author = ref('');
-    const content = ref('');
+const title = ref('');
+const author = ref('');
+const content = ref('');
 
-    function submitPost(){
-        if(title.value && content.value && author.value){
-            const newPost = {
-                title: title.value,
-                content: content.value,
-                author: author.value
-            };
+function submitPost() {
+    if (title.value && content.value && author.value) {
+        const newPost = {
+            title: title.value,
+            content: content.value,
+            author: author.value
+        };
 
-            emit('add-post',newPost);
+        emit('add-post', newPost);
 
-            title.value = '';
-            content.value = '';
-            author.value = '';
-        }
+        title.value = '';
+        content.value = '';
+        author.value = '';
     }
+}
 </script>
 
 <template>
-  <h2>Tạo bài viết mới</h2>
-  <input type="text" v-model="title" placeholder="Tiêu đề bài viết">
-  <input type="text" v-model="author" placeholder="Tên tác giả">
-  <textarea v-model="content" placeholder="Nội dung bài viết"></textarea>
-  <button @click="submitPost">Đăng bài</button>
+    <div>
+        <h2>Tạo bài viết mới</h2>
+        <input type="text" v-model="title" placeholder="Tiêu đề bài viết">
+        <input type="text" v-model="author" placeholder="Tên tác giả">
+        <textarea v-model="content" placeholder="Nội dung bài viết"></textarea>
+        <button @click="submitPost">Đăng bài</button>
+    </div>
 </template>
 
 <style scoped>
-    input, textarea{
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-    }
+input,
+textarea {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
 
-    button{
-        padding: 10px 20px;
-        background-color: #3498db;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 </style>
